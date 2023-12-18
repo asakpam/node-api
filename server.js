@@ -6,7 +6,30 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-
+const patientSchema = new mongoose.Schema({
+    patientID: { type: String, required: true, unique: true },
+    surname: String,
+    otherNames: String,
+    gender: String,
+    phoneNumber: String,
+    residentialAddress: String,
+    emergencyContact: {
+      name: String,
+      contact: String,
+      relationship: String
+    },
+    encounters: [{
+      dateAndTime: Date,
+      encounterType: String,
+      vitals: {
+        bloodPressure: String,
+        temperature: String,
+        pulse: String,
+        spO2: String
+      }
+    }]
+  });ine
+  
 const app = express();
 
 app.use(bodyParser.json());
